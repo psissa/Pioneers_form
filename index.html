@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Information Request</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #a9adb3, #ffffff);
+      padding: 30px;
+      direction: rtl;
+    }
+
+    .form-container, .thank-you-container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 35px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .form-container:hover {
+      transform: translateY(-5px);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-header img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
+
+    .form-header h2 {
+      color: #003366;
+      font-size: 24px;
+      margin: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+      background-color: #f9f9f9;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #007BFF;
+      outline: none;
+      background-color: #fff;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px;
+      width: 100%;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .gender-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .gender-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+    }
+
+    .thank-you-container {
+      display: none;
+      text-align: center;
+    }
+
+    .thank-you-container h1 {
+      font-size: 28px;
+      color: #007BFF;
+      margin-bottom: 10px;
+    }
+
+    .thank-you-container p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 25px 20px;
+      }
+
+      .form-header h2 {
+        font-size: 20px;
+      }
+
+      input, textarea, select {
+        font-size: 14px;
+      }
+
+      button {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container" id="formSection">
+  <div class="form-header">
+    <img src="logo.jpg" alt="شعار الموقع / Site Logo">
+    <h2>Information Request</h2>
+  </div>
+
+  <form id="infoForm" action="https://formsubmit.co/bsissa20@email.com" method="POST">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="thanks.html">
+
+    <label for="name">الاسم الكامل / Full Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="gender">الجنس / Gender:</label>
+    <div class="gender-container">
+      <label class="gender-option">
+        <input type="radio" name="gender" value="masculine" required>
+        ذكر / Masculine
+      </label>
+      <label class="gender-option">
+        <input type="radio" name="gender" value="feminine" required>
+        أنثى / Feminine
+      </label>
+    </div>
+
+    <label for="age">العمر / Age:</label>
+    <input type="number" id="age" name="age" min="5" max="120" required>
+
+    <label for="country">الدولة / Country:</label>
+    <input type="text" id="country" name="country" required>
+
+    <label for="phone">رقم الهاتف / Phone Number:</label>
+    <input type="tel" id="phone" name="phone" pattern="[0-9+\-\s]{7,15}" required>
+
+    <label for="email">البريد الإلكتروني / Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="role">أنت / You are a:</label>
+    <select id="role" name="role" required>
+      <option value="" disabled selected>-- اختر -- / Choose --</option>
+      <option value="student">طالب / Student</option>
+      <option value="worker">عامل / Worker</option>
+      <option value="other">أخرى / Other</option>
+    </select>
+
+    <label for="message">صف نفسك / Describe Yourself:</label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+
+    <button type="submit">إرسال | Submit</button>
+  </form>
+</div>
+
+<div class="thank-you-container" id="thankYouSection">
+  <h1>شكراً لك!</h1>
+  <p>تم استلام معلوماتك بنجاح.<br>كن مستعدًا، سنتواصل معك قريبًا.</p>
+</div>
+
+<script>
+  const form = document.getElementById('infoForm');
+  const formSection = document.getElementById('formSection');
+  const thankYouSection = document.getElementById('thankYouSection');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    fetch("https://formsubmit.co/bsissa20@email.com", {
+      method: "POST",
+      body: formData
+    }).then(response => {
+      if (response.ok) {
+        formSection.style.display = 'none';
+        thankYouSection.style.display = 'block';
+      } else {
+        alert("حدث خطأ أثناء الإرسال. حاول مجددًا.");
+      }
+    }).catch(error => {
+      console.error("Error:", error);
+      alert("فشل في الاتصال بالسيرفر.");
+    });
+  });
+</script>
+
+</body>
+</html>
