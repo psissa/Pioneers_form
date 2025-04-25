@@ -12,7 +12,7 @@
       direction: rtl;
     }
 
-    .form-container, .thank-you-container {
+    .form-container {
       max-width: 600px;
       margin: auto;
       background: #ffffff;
@@ -145,7 +145,7 @@
 
   <form id="infoForm" action="https://formsubmit.co/bsissa20@gmail.com" method="POST">
     <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="thanks.html">
+    <input type="hidden" name="_next" value="">
 
     <label for="name">الاسم الكامل / Full Name:</label>
     <input type="text" id="name" name="name" required>
@@ -189,6 +189,7 @@
   </form>
 </div>
 
+<!-- Thank You Message -->
 <div class="thank-you-container" id="thankYouSection">
   <h1>شكراً لك!</h1>
   <p>تم استلام معلوماتك بنجاح.<br>كن مستعدًا، سنتواصل معك قريبًا.</p>
@@ -200,16 +201,17 @@
   const thankYouSection = document.getElementById('thankYouSection');
 
   form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
+    event.preventDefault(); // Prevents the default form submission
+    
+    // Perform Form Submission
     const formData = new FormData(form);
-    fetch("https://formsubmit.co/bsissa20@email.com", {
+    fetch("https://formsubmit.co/bsissa20@gmail.com", {
       method: "POST",
       body: formData
     }).then(response => {
       if (response.ok) {
-        formSection.style.display = 'none';
-        thankYouSection.style.display = 'block';
+        formSection.style.display = 'none'; // Hide the form
+        thankYouSection.style.display = 'block'; // Show the thank you message
       } else {
         alert("حدث خطأ أثناء الإرسال. حاول مجددًا.");
       }
